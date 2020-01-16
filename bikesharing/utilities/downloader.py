@@ -14,6 +14,17 @@ class Downloader:
     """
 
     def __init__(self, filename=bikesharing.FILENAME, url=bikesharing.URL, save_path=bikesharing.SAVE_PATH):
+        """
+        Initialises the downloader.
+
+        :param filename: the name of the file to download, without extension
+        :type filename: str
+        :param url: the URL of the file to download
+        :type url: str
+        :param save_path: the save path
+        :type save_path: Path
+        """
+
         downloaded_file = save_path.joinpath(Path(filename))
         self.downloaded_file = str(downloaded_file) + "-" + str(date.today()) + ".zip"
         self.url = url
@@ -21,8 +32,17 @@ class Downloader:
         self.download_to = save_path
 
     def fetch_dataset(self):
+        """
+        Downloads the file from the instance URL.
+
+        :return:
+            True if the file was successfully downloaded
+            False if the file already exists
+        :rtype: bool
+        """
+
         if not os.path.exists(self.downloaded_file):
-            os.makedirs(self.download_to, exist_ok=True)
+            os.makedirs(str(self.download_to), exist_ok=True)
             wget.download(self.url, str(self.downloaded_file))
             print("Downloaded " + self.downloaded_file)
             return True
@@ -31,11 +51,19 @@ class Downloader:
             return False
 
     def extract_zip(self):
+        """
+        Extracts a .zip file.
+        """
+
         zip_file = zipfile.ZipFile(self.downloaded_file)
         zip_file.extractall(self.download_to)
         zip_file.close()
         print("Successfully extracted " + str(self.filename))
 
     def run(self):
+        """
+        Fetches and extracts the dataset if it does not already exist on the disk.
+        """
+
         if self.fetch_dataset():
             self.extract_zip()
