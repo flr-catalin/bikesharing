@@ -5,15 +5,15 @@ from pathlib import Path
 
 import wget
 
-import utilities.bikesharing_info as bikesharing
+from bikesharing.utilities import dataset
 
 
 class Downloader:
     """
-    Provides utility functions for fetching a dataset from an URL and for extracting .zip archives.
+    Provides utility functions for fetching a utilities from an URL and for extracting .zip archives.
     """
 
-    def __init__(self, filename=bikesharing.FILENAME, url=bikesharing.URL, save_path=bikesharing.SAVE_PATH):
+    def __init__(self, filename=dataset.FILENAME, url=dataset.URL, save_path=dataset.SAVE_PATH):
         """
         Initialises the downloader.
 
@@ -62,7 +62,7 @@ class Downloader:
 
     def run(self):
         """
-        Fetches and extracts the dataset if it does not already exist on the disk.
+        Fetches and extracts the utilities if it does not already exist on the disk.
         """
 
         if self.fetch_dataset():
